@@ -8,6 +8,7 @@
 >-Dhttp.proxyHost=***.***.***.*** -Dhttp.proxyPort=*** -Dhttps.proxyHost=***.***.***.*** -Dhttps.proxyPort=***
 
 3 Maven的settings.xml增加阿里云镜像：
+
 `<mirror>
   <id>alimaven</id>
   <name>aliyun maven</name>
