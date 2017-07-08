@@ -1,0 +1,6 @@
+#说明
+该工程demo使用Spring Boot 1.5.4构建，相关1.5的版本变化说明
+>参考：[Spring Boot 1.5 版本说明](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-1.5-Release-Notes)
+
+1 Actuator的端点接口文档插件docs，会连接cloudflare以及googleapi,所以会比较慢，
+另外如果为某一个注有@Configuration的类再加上@EnableWebMvc后，docs节点无法打开了直接Whitelable Error Page
