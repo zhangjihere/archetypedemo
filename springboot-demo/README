@@ -4,3 +4,14 @@
 
 1 Actuator的端点接口文档插件docs，会连接cloudflare以及googleapi,所以会比较慢，
 另外如果为某一个注有@Configuration的类再加上@EnableWebMvc后，docs节点无法打开了直接Whitelable Error Page
+2 代理配置，追加加MAVEN_OPTS,GRADLE_OPTS
+>-Dhttp.proxyHost=***.***.***.*** -Dhttp.proxyPort=*** -Dhttps.proxyHost=***.***.***.*** -Dhttps.proxyPort=***
+
+3 Maven的settings.xml增加阿里云镜像：
+
+`<mirror>
+  <id>alimaven</id>
+  <name>aliyun maven</name>
+  <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+  <mirrorOf>central</mirrorOf>        
+</mirror>`
