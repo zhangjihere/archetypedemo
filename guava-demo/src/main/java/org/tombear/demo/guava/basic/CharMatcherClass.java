@@ -1,6 +1,7 @@
 package org.tombear.demo.guava.basic;
 
 import com.google.common.base.CharMatcher;
+
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -13,27 +14,31 @@ public class CharMatcherClass {
 
     @Test
     public void cmTest() {
+        //替换换行符，合并行
         String stringWithLinebreaks = "HHH\naaa \n";
         String rlt = CharMatcher.BREAKING_WHITESPACE.replaceFrom(stringWithLinebreaks, ' ');
         System.out.println(rlt);
 
+        //替换多空白
         String tabsAndSpaces = "aa    qq  \n  fef";
         rlt = CharMatcher.WHITESPACE.collapseFrom(tabsAndSpaces, ' ');
         System.out.println(rlt);
 
+        //去取行首空白，替换多空白
         String beginTabsAndSpaces = "    aa    \nqq    fef";
-        rlt = CharMatcher.WHITESPACE.trimAndCollapseFrom(   beginTabsAndSpaces, ' ');
+        rlt = CharMatcher.WHITESPACE.trimAndCollapseFrom(beginTabsAndSpaces, ' ');
         System.out.println(rlt);
 
-        //retain
+        //retain，保留指定数字字符集合
         String lettersAndNumbers = "foo989yxbar234";
         String expected = "989234";
         String retained = CharMatcher.JAVA_DIGIT.retainFrom(lettersAndNumbers);
-        assertThat(expected,is(retained));
+        assertThat(expected, is(retained));
 
+        //保留多字符集合
         String noSpaceAndDigit = "abcdefghijklmn";
         expected = "989234";
         retained = CharMatcher.JAVA_DIGIT.or(CharMatcher.WHITESPACE).retainFrom(noSpaceAndDigit);
-        assertThat(expected,is(retained));
+        assertThat(expected, is(retained));
     }
 }

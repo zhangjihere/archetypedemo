@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
 public class SplitterClass {
 
     //Splitter.on("") is immutable
-
+    //基本的字符分割器定义
     Splitter splitter1 = Splitter.on('|');
     Splitter splitter2 = Splitter.on("\\d+");//split on one or more consecutive digits embedded in a string
     Splitter splitter3 = Splitter.on('|').trimResults();
@@ -28,6 +28,7 @@ public class SplitterClass {
         testMap.put("New York City", "Giants");
         testMap.put("Philadelphia", "Eagles");
         testMap.put("Dallas", "Cowboys");
+        //字符串分割器，把字符串分割生成Map数据结构
         Splitter.MapSplitter mapSplitter = Splitter.on("#").withKeyValueSeparator("=");
         Map<String, String> splitMap = mapSplitter.split(startString);
         assertThat(testMap, is(splitMap));

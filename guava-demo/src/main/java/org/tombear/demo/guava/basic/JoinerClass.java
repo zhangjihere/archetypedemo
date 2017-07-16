@@ -20,6 +20,7 @@ import java.util.Map;
 public class JoinerClass {
 
     //Joiner.on("") is immutable
+    //给实现了Appendable接口的类代理调用append方法
 
     @Test
     public void SbTest() {

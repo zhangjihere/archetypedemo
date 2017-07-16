@@ -11,6 +11,7 @@ import org.junit.Test;
  * firstNonNull
  * compareTo
  * <p>
+ *     使用了 MoreObjects 类和 ComparisonChain 类
  * Created by ji.zhang on 7/14/17.
  */
 public class MoreObjectsClass {
