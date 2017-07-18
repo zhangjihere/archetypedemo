@@ -2,13 +2,9 @@ package org.tombear.demo.guava.basic;
 
 import com.google.common.base.Strings;
 
-import com.sun.source.tree.AssertTree;
-
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
-
-import jdk.nashorn.internal.AssertsEnabled;
 
 /**
  * Created by ji.zhang on 7/14/17.
