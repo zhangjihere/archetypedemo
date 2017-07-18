@@ -3,9 +3,10 @@ package org.tombear.demo.guava.functional;
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.base.Joiner;
-import com.google.common.base.MoreObjects;
 
 import org.junit.Test;
+import org.tombear.demo.guava.City;
+import org.tombear.demo.guava.State;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,48 +28,11 @@ public class FunctionsClass {
         cities.add(new City("Albany", "1001", 20013));
         cities.add(new City("Buffalo", "1002", 99331));
         cities.add(new City("NewYorkCity", "1003", 41721));
-        state.name = "New York";
-        state.code = "1000";
-        state.mainCities = cities;
+        state.setName("New York");
+        state.setCode("1000");
+        state.setMainCities(cities);
         stateMap.put("NY", state);
     }
-
-    // 州
-    static class State {
-        State(String name, String code, Set<City> mainCities) {
-            this.name = name;
-            this.code = code;
-            this.mainCities = mainCities;
-        }
-
-        String name;
-        String code;
-        Set<City> mainCities = new HashSet<>();
-
-        @Override
-        public String toString() {
-            return MoreObjects.toStringHelper(this).add("name", name).add("code", code).add("mainCities", mainCities).toString();
-        }
-    }
-
-    // 市
-    static class City {
-        City(String name, String zipCode, int population) {
-            this.name = name;
-            this.zipCode = zipCode;
-            this.population = population;
-        }
-
-        String name;
-        String zipCode;
-        int population;
-
-        @Override
-        public String toString() {
-            return this.name;
-        }
-    }
-    //////////////////////////////////////////////
 
     //Functions的forMap方法
     @Test
@@ -85,7 +49,7 @@ public class FunctionsClass {
         Function<State, String> stateFunction = new Function<State, String>() {
             @Override
             public String apply(State input) {
-                return Joiner.on(",").join(input.mainCities);
+                return Joiner.on(",").join(input.getMainCities());
             }
         };
         Function<String, String> composed = Functions.compose(stateFunction, lookup);

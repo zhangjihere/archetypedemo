@@ -11,6 +11,7 @@ import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.tombear.demo.guava.Person;
 
 import java.util.List;
 import java.util.Map;
@@ -23,25 +24,11 @@ import static org.hamcrest.core.Is.is;
  * Created by ji.zhang on 7/18/17.
  */
 public class FluentIterableClass {
-    static class Person {
-        String firstName;
-        String lastName;
-        int age;
-        String sex;
-
-        Person(String firstName, String lastName, int age, String sex) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.age = age;
-            this.sex = sex;
-        }
-    }
-
-    List<Person> personList;
-    Person person1;
-    Person person2;
-    Person person3;
-    Person person4;
+    private List<Person> personList;
+    private Person person1;
+    private Person person2;
+    private Person person3;
+    private Person person4;
 
     @Before
     public void setUp() {
@@ -59,7 +46,7 @@ public class FluentIterableClass {
                 FluentIterable.from(personList).filter(new Predicate<Person>() {
                     @Override
                     public boolean apply(Person input) {
-                        return input.age > 31;
+                        return input.getAge() > 31;
                     }
                 });
 //        以上可替换为如下JavaAPI的lambda表达方法
@@ -79,7 +66,7 @@ public class FluentIterableClass {
                 FluentIterable.from(personList).transform(new Function<Person, String>() {
                     @Override
                     public String apply(Person input) {
-                        return Joiner.on('#').join(input.lastName, input.firstName, input.age);
+                        return Joiner.on('#').join(input.getLastName(), input.getFirstName(), input.getAge());
                     }
                 }).toList();
 //        以上可替换为如下JavaAPI的lambda表达方法
@@ -96,7 +83,7 @@ public class FluentIterableClass {
                 FluentIterable.from(personList).transform(new Function<Person, String>() {
                     @Override
                     public String apply(Person input) {
-                        return Joiner.on('#').join(input.lastName, input.firstName, input.age);
+                        return Joiner.on('#').join(input.getLastName(), input.getFirstName(), input.getAge());
                     }
                 }).toMap(new Function<String, String>() {
                     @Override
