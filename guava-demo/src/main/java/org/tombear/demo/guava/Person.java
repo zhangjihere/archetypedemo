@@ -97,7 +97,6 @@ public class Person implements Comparable<Person> {
                 .result();
     }
 
-
     /**
      * @return 准备集合数据
      */
@@ -105,10 +104,10 @@ public class Person implements Comparable<Person> {
         Supplier<List<Person>> supplierPersonList = new Supplier<List<Person>>() {
             @Override
             public List<Person> get() {
-                Person person1 = new Person("Wilma", "Flintstone", 30, "F");
-                Person person2 = new Person("Fred", "Flintstone", 32, "M");
+                Person person1 = new Person("Wilma", "Flintstone", 25, "F");
+                Person person2 = new Person("Fred", "Flintstone", 44, "M");
                 Person person3 = new Person("Betty", "Rubble", 31, "F");
-                Person person4 = new Person("Barney", "Rubble", 33, "M");
+                Person person4 = new Person("Barney", "Rubble", 55, "M");
                 return Lists.newArrayList(person1, person2, person3, person4);
             }
         };
