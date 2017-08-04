@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.*;
+
 import org.junit.Test;
 import org.tombear.demo.guava.Person;
 
@@ -60,5 +61,21 @@ public class RangeClass {
         System.out.println("before filter: " + personList);
         Collection<Person> filter = Collections2.filter(personList, agePred);
         System.out.println("after filter: " + filter);
+    }
+
+    /**
+     * 范围集合的Map映射，及结合映射的差集
+     */
+    @Test
+    public void rangeRangeMapDemo() {
+        RangeMap<Integer, String> rangeMap = new ImmutableRangeMap.Builder<Integer, String>()
+                .put(Range.closed(1, 7), "aaa")// {[1,7]}
+                .put(Range.openClosed(10, 13), "bbb")// {[1,7], (7,13]}
+                .put(Range.closedOpen(15, 20), "ccc").build();// {[1,7], (7,13], [15,20)}
+        System.out.println(rangeMap.get(3));
+        System.out.println(rangeMap.subRangeMap(Range.closedOpen(4, 16)));
+
+        RangeMap<Integer, String> treeRangeMap = TreeRangeMap.create();
+        treeRangeMap.put(Range.closedOpen(1, 10), "first");
     }
 }
