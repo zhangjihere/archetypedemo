@@ -1,5 +1,6 @@
 package org.tombear.demo.guava;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
@@ -45,7 +46,10 @@ public class City {
 
     @Override
     public String toString() {
-        return this.name;
+        return MoreObjects.toStringHelper(this)
+                .omitNullValues()
+                .add("name", name).add("population", population)
+                .toString();
     }
 
     public static Map<String, City> createCityMapData() {
