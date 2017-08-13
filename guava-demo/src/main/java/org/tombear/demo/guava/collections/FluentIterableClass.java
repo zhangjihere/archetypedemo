@@ -1,4 +1,4 @@
-package org.tombear.demo.guava.Collections;
+package org.tombear.demo.guava.collections;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -14,8 +14,6 @@ import org.junit.Test;
 import org.tombear.demo.guava.Person;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.hamcrest.core.Is.is;
 

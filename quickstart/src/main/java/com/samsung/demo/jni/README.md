@@ -14,7 +14,7 @@
   ```
   gcc -Wall -fPIC -I"$JAVA_HOME"/include -I"$JAVA_HOME"/include/linux -shared -o libhello.so HelloJNI.cpp
   ```
-注意，Windows和Linux环境的下的动态库的命名方式不同，例如，Windows下hello.so，则Linux下是libhello.so  
+注意，Windows和Linux环境的下的动态库的命名方式不同，例如，Windows下hello.dll，则Linux下是libhello.so  
 ##命令行执行
 编译调用JNI的.java文件为.class，然后执行命令的工作目录在包外(src/main/java目录下),并配置JVM参数，命令如下：
     ```

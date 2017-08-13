@@ -1,4 +1,4 @@
-package org.tombear.demo.guava.Collections;
+package org.tombear.demo.guava.collections;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;

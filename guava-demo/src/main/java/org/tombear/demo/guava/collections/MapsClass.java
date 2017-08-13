@@ -1,4 +1,4 @@
-package org.tombear.demo.guava.Collections;
+package org.tombear.demo.guava.collections;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;
@@ -6,7 +6,6 @@ import com.google.common.collect.Sets;
 import org.junit.Test;
 import org.tombear.demo.guava.Book;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
