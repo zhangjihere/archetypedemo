@@ -7,6 +7,7 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,8 +41,8 @@ public class FluentIterableClass {
     // 过滤List集合元素
     @Test
     public void testFilter() throws Exception {
-        Iterable<Person> filteredByAge =
-                FluentIterable.from(personList).filter(new Predicate<Person>() {
+        Iterable<Person> filteredByAge = FluentIterable.from(personList)
+                .filter(new Predicate<Person>() {
                     @Override
                     public boolean apply(Person input) {
                         return input.getAge() > 31;
@@ -60,8 +61,8 @@ public class FluentIterableClass {
     // 转换List集合到List
     @Test
     public void testTransformToList() throws Exception {
-        List<String> transToList =
-                FluentIterable.from(personList).transform(new Function<Person, String>() {
+        List<String> transToList = FluentIterable.from(personList)
+                .transform(new Function<Person, String>() {
                     @Override
                     public String apply(Person input) {
                         return Joiner.on('#').join(input.getLastName(), input.getFirstName(), input.getAge());
@@ -77,8 +78,8 @@ public class FluentIterableClass {
     // 转换List集合映射到Map
     @Test
     public void testTransformToMap() {
-        ImmutableMap<String, String> transToMap =
-                FluentIterable.from(personList).transform(new Function<Person, String>() {
+        ImmutableMap<String, String> transToMap = FluentIterable.from(personList)
+                .transform(new Function<Person, String>() {
                     @Override
                     public String apply(Person input) {
                         return Joiner.on('#').join(input.getLastName(), input.getFirstName(), input.getAge());

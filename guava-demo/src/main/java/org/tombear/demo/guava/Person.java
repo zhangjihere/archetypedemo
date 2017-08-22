@@ -80,7 +80,9 @@ public class Person implements Comparable<Person> {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .omitNullValues()
-                .add("name", name).add("age", age)
+                .add("firstName", firstName)
+                .add("lastName", lastName)
+                .add("name", name).add("age", age).add("sex", sex)
                 .toString();
     }
 
@@ -104,10 +106,10 @@ public class Person implements Comparable<Person> {
         Supplier<List<Person>> supplierPersonList = new Supplier<List<Person>>() {
             @Override
             public List<Person> get() {
-                Person person1 = new Person("Wilma", "Flintstone", 25, "F");
-                Person person2 = new Person("Fred", "Flintstone", 44, "M");
-                Person person3 = new Person("Betty", "Rubble", 31, "F");
-                Person person4 = new Person("Barney", "Rubble", 55, "M");
+                Person person1 = new Person("Wilma", "Flintstone", "wf", 25, "F");
+                Person person2 = new Person("Fred", "Flintstone", "ff", 44, "M");
+                Person person3 = new Person("Betty", "Rubble", "br", 31, "F");
+                Person person4 = new Person("Barney", "Rubble", "br", 55, "M");
                 return Lists.newArrayList(person1, person2, person3, person4);
             }
         };
