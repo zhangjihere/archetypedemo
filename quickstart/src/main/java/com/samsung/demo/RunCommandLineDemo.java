@@ -8,25 +8,30 @@ import java.io.InputStreamReader;
 
 /**
  * this demo show how to run CLI command in JAVA
+ *
  * Created by ji.zhang on 8/2/17.
  */
 public class RunCommandLineDemo {
 
     public static void main(String[] args) {
-        String directory = "/home/zhangji/Downloads/ice-demos-master/cpp98/Ice/hello/";
-        String command = "./server";
+        String directory = System.getenv("HOME");
+        String command = "ls -lrt";
         System.out.println(String.format("Java run CLI, directory: %s,\ncommand: %s\n", directory, command));
-        RunCommandLineDemo cliDemo = new RunCommandLineDemo();
-        cliDemo.runCLI(directory, command);
+
+        new RunCommandLineDemo().runCLI(directory, command);
     }
 
     /**
      * run CLI command based on directory.
+     *
      * @param directory CLI working directory
-     * @param command such as "ping","localhost" or "./server"
+     * @param command   such as "ping","ls -lrt" or "./server"
      */
-    private void runCLI(String directory, String... command) {
-        ProcessBuilder pb = new ProcessBuilder(command).directory(new File(directory));
+    private void runCLI(String directory, String command) {
+        String splitPattern = " +|\t+";
+        ProcessBuilder pb = new ProcessBuilder(command.split(splitPattern)).directory(new File(directory));
+
+//        pb.environment().forEach((k, v) -> System.out.println(k + ": " + v));
         try {
             Process p = pb.start();
             startCliPrintListener(p);
@@ -45,6 +50,7 @@ public class RunCommandLineDemo {
 
     /**
      * prepare and start CLI print Listener
+     *
      * @param p a CLI process
      */
     private void startCliPrintListener(Process p) {
@@ -61,20 +67,12 @@ public class RunCommandLineDemo {
 
         private InputStream inputStream;
 
-        public CliPrintTask(InputStream inputStream) {
+        private CliPrintTask(InputStream inputStream) {
             this.inputStream = inputStream;
         }
 
         public void run() {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
-                String line = br.readLine();
-                while (line != null) {
-                    System.out.println("output: " + line);
-                    line = br.readLine();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            new BufferedReader(new InputStreamReader(inputStream)).lines().forEach(System.out::println);
         }
     }
 
