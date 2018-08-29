@@ -3,8 +3,14 @@ package com.samsung.demo;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.FileAttribute;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
+import java.util.Set;
 
 /**
  * this demo show how to run CLI command in JAVA
@@ -15,28 +21,30 @@ public class RunCommandLineDemo {
 
     public static void main(String[] args) {
         String directory = System.getenv("HOME");
-        String command = "ls -lrt";
+        String command = "find ./ -type d";
         System.out.println(String.format("Java run CLI, directory: %s,\ncommand: %s\n", directory, command));
 
-        new RunCommandLineDemo().runCLI(directory, command);
+        runCLI(directory, "stdout.cli", command);
     }
 
     /**
      * run CLI command based on directory.
      *
      * @param directory CLI working directory
-     * @param command   such as "ping","ls -lrt" or "./server"
+     * @param logFile   log file is in directory param
+     * @param command   Such as "ping","ls -lrt" or "./server"
      */
-    private void runCLI(String directory, String command) {
+    public static void runCLI(String directory, String logFile, String command) {
         String splitPattern = " +|\t+";
-        ProcessBuilder pb = new ProcessBuilder(command.split(splitPattern)).directory(new File(directory));
-
-//        pb.environment().forEach((k, v) -> System.out.println(k + ": " + v));
+        ProcessBuilder pb = new ProcessBuilder(command.trim().split(splitPattern)).directory(new File(directory));
+        ProcessBuilder.Redirect redirectFile = redirectLog2File(directory, logFile);
+        pb.redirectOutput(redirectFile);
+        pb.redirectError(redirectFile);
         try {
             Process p = pb.start();
-            startCliPrintListener(p);
+//            startCliPrintListener(p);
             Runtime.getRuntime().addShutdownHook(new Thread(p::destroy));//add hook for kill CLI process
-            if (p.waitFor() != 0) {
+            if (p.waitFor() != 0) { // Here, it will block to wait process finished.
                 System.err.println("running command do not exit normal. exitValue: " + p.exitValue());
                 System.err.println("ready to shutdown JVM, clear process");
             } else {
@@ -48,32 +56,29 @@ public class RunCommandLineDemo {
         }
     }
 
+    private static ProcessBuilder.Redirect redirectLog2File(String directory, String logFile) {
+        Path path = Paths.get(directory + "/" + logFile);
+        if (!Files.exists(path)) {
+            try {
+                Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rw-r--r--");
+                FileAttribute<Set<PosixFilePermission>> fileAttrs = PosixFilePermissions.asFileAttribute(perms);
+                Files.createFile(path, fileAttrs);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return ProcessBuilder.Redirect.appendTo(path.toFile());
+    }
+
     /**
      * prepare and start CLI print Listener
      *
      * @param p a CLI process
      */
-    private void startCliPrintListener(Process p) {
-        Thread cliPrint = new Thread(new CliPrintTask(p.getInputStream()), "listenCliPrint");
-        Thread cliErrPrint = new Thread(new CliPrintTask(p.getErrorStream()), "listenCliErrPrint");
-        cliPrint.start();
-        cliErrPrint.start();
-    }
-
-    /**
-     * this task is used for listening the CLI print content.
-     */
-    class CliPrintTask implements Runnable {
-
-        private InputStream inputStream;
-
-        private CliPrintTask(InputStream inputStream) {
-            this.inputStream = inputStream;
-        }
-
-        public void run() {
-            new BufferedReader(new InputStreamReader(inputStream)).lines().forEach(System.out::println);
-        }
+    @Deprecated
+    private static void startCliPrintListener(Process p) {
+        new Thread(() -> new BufferedReader(new InputStreamReader(p.getInputStream())).lines().forEach(System.out::println), "listenCliPrint").start();
+        new Thread(() -> new BufferedReader(new InputStreamReader(p.getErrorStream())).lines().forEach(System.out::println), "listenCliErrPrint").start();
     }
 
 }
