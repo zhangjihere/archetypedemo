@@ -32,7 +32,7 @@ public class SHA1_Example2 {
     }
 
     static String sha1File(String file) throws NoSuchAlgorithmException {
-        MessageDigest sha1 = MessageDigest.getInstance("SHA1");
+        MessageDigest sha1 = MessageDigest.getInstance("SHA-256");
         try (FileInputStream fis = new FileInputStream(file)) {
             byte[] data = new byte[1024];
             int read = 0;
@@ -43,7 +43,8 @@ public class SHA1_Example2 {
 
             StringBuffer sb = new StringBuffer();
             for (byte hashByte : hashBytes) {
-                sb.append(Integer.toString((hashByte & 0xff) + 0x100, 16).substring(1));
+                String s = Integer.toString((hashByte & 0xff) , 16);
+                sb.append(s);
             }
             return sb.toString();
         } catch (IOException e) {
