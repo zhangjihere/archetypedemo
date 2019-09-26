@@ -1,0 +1,50 @@
+@startuml
+interface Visitor {
+  +{abstract} void visit(Customer)
+  +{abstract} void visit(Order)
+  +{abstract} void visit(Item)
+}
+
+interface Element {
+  +{abstract} void accept(Visitor)
+}
+
+class CustomerGroup{
+  - ArrayList<Customer> customers
+  + void addCustomer(Customer)
+}
+class Customer{
+  - String name
+  - ArrayList<Order> orders
+  + String getName()
+  + addOrder(Order)
+}
+class Order{
+  - String name
+  - ArrayList<Item> items
+  + String getName()
+  + void addItem(Item)
+}
+class Item{
+  - String name
+  + String getName()
+}
+class GeneralResult{
+  - int customerNo
+  - int orderNo
+  - int itemNo
+  ~ void displayResult()
+}
+
+Element <|.. CustomerGroup
+Element <|.. Customer
+Element <|.. Order
+Element <|.. Item
+
+CustomerGroup o- Element
+
+Visitor <|.. GeneralResult
+
+Client --> CustomerGroup
+Client --> Visitor
+@enduml

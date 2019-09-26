@@ -27,8 +27,7 @@ public class GeneralReport implements Visitor {
         itemNo++;
     }
 
-    @Override
-    public void displayResult() {
+    void displayResult() {
         System.out.println("Number of customers: " + customerNo);
         System.out.println("Number of orders: " + orderNo);
         System.out.println("Number of items: " + itemNo);

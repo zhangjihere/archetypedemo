@@ -10,6 +10,4 @@ public interface Visitor {
     void visit(Order order);
 
     void visit(Item item);
-
-    void displayResult();
 }
