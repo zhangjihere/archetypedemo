@@ -5,10 +5,10 @@ package org.tombear.designpattern.state;
  */
 public class BallMechine {
 
-    State outOfBall = new OutOfBall(this);
-    State noCoin = new NoCoin(this);
-    State hasCoin = new HasCoin(this);
-    State soldBall = new SoldCoin(this);
+    final State outOfBall = new OutOfBall(this);
+    final State noCoin = new NoCoin(this);
+    final State hasCoin = new HasCoin(this);
+    final State soldBall = new SoldCoin(this);
 
     int ballNum;
     State currentState;

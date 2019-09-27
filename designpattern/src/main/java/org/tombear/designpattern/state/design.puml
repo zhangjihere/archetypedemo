@@ -1,0 +1,40 @@
+@startuml
+interface State {
+  +{abstract} void insertCoin()
+  +{abstract} void ejectCoin()
+  +{abstract} void turnsCrank()
+  +{abstract} void dispenseBall()
+}
+
+class NoCoin{
+  - mechine
+}
+class HasCoin{
+  - mechine
+}
+class OutOfBall{
+  - mechine
+}
+class SoldCoin{
+  - mechine
+}
+
+class BallMechine{
+  - int ballNum
+  - State currentState
+  + void changeState()
+  + insertCoin()
+  + ejectCoin()
+  + turnsCrank()
+  + releaseBall()
+}
+
+State <|.. NoCoin
+State <|.. HasCoin
+State <|.. OutOfBall
+State <|.. SoldCoin
+
+BallMechine o- State
+
+Client --> BallMechine
+@enduml
