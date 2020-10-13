@@ -61,7 +61,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.1</version>
         </dependency>
         <!-- 工程需要JDK中的lib下的tools.jar,这里的maven坐标及版本是假的 -->
         <dependency>
